@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:tns="http://www.example.org/hodelineWebWS/" 
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"	
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="hodelineWebWS"
+                  targetNamespace="http://www.example.org/hodelineWebWS/">
+	
+    <wsdl:types>
+                
+        <xsd:schema targetNamespace="http://www.example.org/hodelineWebWS/">
+            
+            <xsd:element name="genericOut">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="mensaje" type="xsd:string"></xsd:element>
+                        <xsd:element name="exito" type="xsd:boolean"></xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>   
+            
+            <xsd:element name="ponerReservaEnUsoIn">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="base" type="xsd:int"></xsd:element>
+                        <xsd:element name="codReservaCentral" type="xsd:int"></xsd:element>
+                        <xsd:element name="codDetalleHW" type="xsd:int"></xsd:element>
+                        <xsd:element name="valor" type="xsd:int"></xsd:element>
+                        <xsd:element name="idioma" type="xsd:int"></xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+                               
+        </xsd:schema>
+			
+    </wsdl:types>
+
+    <wsdl:message name="ponerReservaEnUsoRequest">
+        <wsdl:part element="tns:ponerReservaEnUsoIn" name="in"/>
+    </wsdl:message>
+    
+    <wsdl:message name="ponerReservaEnUsoResponse">
+        <wsdl:part element="tns:genericOut" name="out" />
+    </wsdl:message>
+    
+    <wsdl:portType name="hodelineWebWS">
+        
+        <wsdl:operation name="ponerReservaEnUso">
+            <wsdl:input message="tns:ponerReservaEnUsoRequest"/>
+            <wsdl:output message="tns:ponerReservaEnUsoResponse"/>
+        </wsdl:operation>
+        
+    </wsdl:portType>
+    
+    <wsdl:binding name="hodelineWebWSSOAP" type="tns:hodelineWebWS">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        
+        <wsdl:operation name="ponerReservaEnUso">
+            <soap:operation soapAction="http://www.example.org/hodelineWebWS/ponerReservaEnUso" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+	
+    <wsdl:service name="hodelineWebWS">
+        <wsdl:port binding="tns:hodelineWebWSSOAP" name="hodelineWebWSSOAP">
+           <soap:address location="http://localhost//decameron/servicios/centralHotelera/server.php" />
+        </wsdl:port>
+    </wsdl:service>
+    
+</wsdl:definitions>
